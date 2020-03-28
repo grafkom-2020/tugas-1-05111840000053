@@ -47,5 +47,5 @@ function main() {
     gl.clearColor(0.0, 0.0, 0.0, 0.9);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    gl.drawArrays(gl.LINE_LOOP, 0, 6);
+    gl.drawArrays(gl.TRIANGLE_FAN, 0, 6);
 }
