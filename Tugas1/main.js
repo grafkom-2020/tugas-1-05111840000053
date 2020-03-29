@@ -39,7 +39,7 @@ function main() {
         [0.0, 1.0, 0.0],    // hijau
         [0.0, 0.0, 1.0],    // biru
         [1.0, 1.0, 0.0],    // kuning
-        [1.0, 0.5, 0.0],    // oranye   //blkng
+        [1.0, 0.5, 0.0],    // oranye  //blkng
         [1.0, 0.5, 0.0],    // oranye
         [1.0, 1.0, 0.0],    // kuning
         [1.0, 1.0, 1.0],    // putih
