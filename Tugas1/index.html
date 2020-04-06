@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title> Tugas 1- Yulia Niza</title>
+        <title> Tugas 1- 05111840000053</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                overflow-y: hidden;
+                background-color: white;
+            }
+            #rightCanvas {
+                float: right;
+            }
+        </style>
     </head>
-
-    <body onload="main()">
-        <canvas width="621" height="605" id="leftCanvas">
-            Browser tidak support
-        </canvas>
-        <canvas width="621" height="605" id="rightCanvas">
-        </canvas>
-
-        <script type="text/javascript" src="main.js"></script>
+    <body onclick="fullscreen()" onload="main()" onresize = "resize()">
+        <canvas id="leftCanvas">  Browser tidak support </canvas>
+        <canvas id="rightCanvas"> </canvas>
+        <script type="text/javascript" src="main.js"> </script>
     </body>
-
 </html>
