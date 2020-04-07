@@ -304,17 +304,17 @@ function main()
    //Matriks
     function get_projection(angle, a, zMin, zMax) 
     {
-      var ang = Math.tan((angle*.5)*Math.PI/180);//angle*.5
+      var ang = Math.tan((angle/6)*Math.PI/180);
       return [
-          0.5/ang, 0 , 0, 0,
-          0, 0.5*a/ang, 0, 0,
+          1.0/ang, 0 , 0, 0,
+          0, 1.0*a/ang, 0, 0,
           0, 0, -(zMax+zMin)/(zMax-zMin), -1,
           0, 0, (-2*zMax*zMin)/(zMax-zMin), 0
           ];
     }
 
-    var proj_matrixL = get_projection(10, leftGL.canvas.width/leftGL.canvas.height, 1, 10);
-    var proj_matrixR = get_projection(10, rightGL.canvas.width/rightGL.canvas.height, 1, 10);
+    var proj_matrixL = get_projection(60, leftGL.canvas.width/leftGL.canvas.height, 1, 50);
+    var proj_matrixR = get_projection(60, rightGL.canvas.width/rightGL.canvas.height, 1, 50);
 
     var mov_matrixL = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
     var mov_matrixR = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
@@ -382,7 +382,7 @@ function main()
       rotateZ(mov_matrixL, dt*0.0005);
       rotateZ(mov_matrixR, dt*0.0005);
       rotateY(mov_matrixR, dt2*0.00075);
-      rotateX(mov_matrixR, dt2*0.00025);
+      rotateX(mov_matrixR, dt*0.00025);
 
       time_old = time;
 
