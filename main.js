@@ -470,12 +470,12 @@ function main()
 			rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
 			resized = false;
 		}
-		rotX += 0.25;
-		rotY += 0.75;
-		rotZ += 0.5;
-		if (rotX > 360) rotX -= 360;
-		if (rotY > 360) rotY -= 360;
-		if (rotZ > 360) rotZ -= 360;
+		// rotX += 0.25;
+		// rotY += 0.75;
+		// rotZ += 0.5;
+		// if (rotX > 360) rotX -= 360;
+		// if (rotY > 360) rotY -= 360;
+		// if (rotZ > 360) rotZ -= 360;
 
 		var mov_matrixL = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
 		mov_matrixL = rotateZ(mov_matrixL, rotZ);
