@@ -398,17 +398,11 @@ function main()
 	var leftVertexShaderCode = 
 	'attribute vec3 aPosition;'+
 	'attribute vec3 aColor;'+
-	'attribute vec3 aNormal;'+
 	'uniform mat4 aMatrix;'+
-	'varying vec3 vPosition;'+
 	'varying vec3 vColor;'+
-	'varying vec3 vNormal;'+
 	'varying vec3 vLighting;'+
-
 	'void main(void) {'+
 		'vColor = aColor;'+
-		'vPosition = (aMatrix * vec4(aPosition, 1.0)).xyz;'+
-		'vNormal = normalize(mat3(aMatrix) * aNormal);'+
 		'vec3 ambientLight = vec3(0.2,0.2,0.2);'+
 		'gl_Position =  aMatrix * vec4(aPosition, 1.0);'+
 		'vLighting = ambientLight;'+
@@ -416,18 +410,9 @@ function main()
 	
 	var leftFragmentShaderCode = 
 	'precision mediump float;'+
-	'uniform vec3 uLight;'+
-	'uniform vec3 uLightColor;'+
-	'uniform mat4 uLightMat;'+
-	'varying vec3 vPosition;'+
-	'varying vec3 vNormal;'+
 	'varying vec3 vColor;'+
 	'varying vec3 vLighting;'+
 	'void main() {'+
-	'vec3 lightDir = (uLightMat * vec4(normalize(uLight), 1.0)).xyz;'+
-	'vec3 ambient = ambientStrength * uLightColor;'+
-	'vec3 diffuse = max(dot(vNormal, lightDir), 0.0) * uLightColor;'+
-	'vec3 color = (ambientStrength + diffuse) * vColor;'+
 	'gl_FragColor = vec4(vColor*vLighting, 1.0);'+
 	'}';
 
@@ -444,15 +429,10 @@ function main()
 	leftGL.useProgram(leftShaderProgram);
 	leftGL.bindBuffer(leftGL.ARRAY_BUFFER, leftVertexBuffer);
 	var leftPosition = leftGL.getAttribLocation(leftShaderProgram, "aPosition");
-	// leftGL.vertexAttribPointer(leftPosition, 3, leftGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
-	// leftGL.enableVertexAttribArray(leftPosition);
-	var leftColor = leftGL.getAttribLocation(leftShaderProgram, "aColor");
-	var rightNormal = rightGL.getAttribLocation(rightShaderProgram, "aNormal");
-	leftGL.vertexAttribPointer(leftPosition, 3, leftGL.FLOAT, false, 9 * Float32Array.BYTES_PER_ELEMENT, 0);
-	leftGL.vertexAttribPointer(leftColor, 3, leftGL.FLOAT, false, 9 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
-	rightGL.vertexAttribPointer(rightNormal, 3, rightGL.FLOAT, false, 9 * Float32Array.BYTES_PER_ELEMENT, 6 * Float32Array.BYTES_PER_ELEMENT);
-
+	leftGL.vertexAttribPointer(leftPosition, 3, leftGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
 	leftGL.enableVertexAttribArray(leftPosition);
+	var leftColor = leftGL.getAttribLocation(leftShaderProgram, "aColor");
+	leftGL.vertexAttribPointer(leftColor, 3, leftGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
 	leftGL.enableVertexAttribArray(leftColor);
 
 
@@ -466,36 +446,22 @@ function main()
 	'attribute vec3 aPosition;'+
 	'attribute vec3 aColor;'+
 	'varying vec3 vLighting;'+
-	'attribute vec3 aNormal;'+
 	'uniform mat4 bMatrix;'+
 	'uniform mat4 aMatrix;'+
-	'varying vec3 vPosition;'+
 	'varying vec3 vColor;'+
-	'varying vec3 vNormal;'+
 	'void main(void) {'+
 		'vColor = aColor;'+
-		'vPosition = (aMatrix * vec4(aPosition, 1.0)).xyz;'+
 		'vec3 ambientLight = vec3(0.2,0.2,0.2);'+
-		'vNormal = normalize(mat3(aMatrix) * aNormal);'+
 		'gl_Position = bMatrix * aMatrix * vec4(aPosition, 1.0);'+
 		'vLighting = ambientLight;'+
 	'}';
 	
 	var rightFragmentShaderCode = 
 	'precision mediump float;' +
-	'uniform vec3 uLight;'+
-	'uniform vec3 uLightColor;'+
-	'uniform mat4 uLightMat;'+
-	'varying vec3 vPosition;'+
 	'varying vec3 vColor;'+
 	'varying vec3 vLighting;'+
-	'varying vec3 vNormal;'+
 	'void main() {'+
 	'gl_FragColor = vec4(vColor*vLighting, 1.0);'+
-	'vec3 lightDir = (uLightMat * vec4(normalize(uLight), 1.0)).xyz;'+
-	'vec3 ambient = ambientStrength * uLightColor;'+
-	'vec3 diffuse = max(dot(vNormal, lightDir), 0.0) * uLightColor;'+
-	'vec3 color = (ambientStrength + diffuse) * vColor;'+
 	'}'
 	;
 	var vertexShader = rightGL.createShader(rightGL.VERTEX_SHADER);
@@ -513,19 +479,9 @@ function main()
 	var rightPosition = rightGL.getAttribLocation(rightShaderProgram, "aPosition");
 	rightGL.vertexAttribPointer(rightPosition, 3, rightGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 0);
 	rightGL.enableVertexAttribArray(rightPosition);
-	rightGL.enableVertexAttribArray(rightNormal);
-	var rightPosition = rightGL.getAttribLocation(rightShaderProgram, "aPosition");
 	var rightColor = rightGL.getAttribLocation(rightShaderProgram, "aColor");
 	rightGL.vertexAttribPointer(rightColor, 3, rightGL.FLOAT, false, 6 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
 	rightGL.enableVertexAttribArray(rightColor);
-	var rightNormal = rightGL.getAttribLocation(rightShaderProgram, "aNormal");
-	rightGL.vertexAttribPointer(rightPosition, 3, rightGL.FLOAT, false, 9 * Float32Array.BYTES_PER_ELEMENT, 0);
-	rightGL.vertexAttribPointer(rightColor, 3, rightGL.FLOAT, false, 9 * Float32Array.BYTES_PER_ELEMENT, 3 * Float32Array.BYTES_PER_ELEMENT);
-	rightGL.vertexAttribPointer(rightNormal, 3, rightGL.FLOAT, false, 9 * Float32Array.BYTES_PER_ELEMENT, 6 * Float32Array.BYTES_PER_ELEMENT);
-
-	rightGL.enableVertexAttribArray(rightPosition);
-	rightGL.enableVertexAttribArray(rightColor);
-	rightGL.enableVertexAttribArray(rightNormal);
 	
 //=============================================================================================================================================//
 	
@@ -540,6 +496,11 @@ function main()
 	var projection = rightGL.getUniformLocation(rightShaderProgram, "bMatrix");
 	rightGL.uniformMatrix4fv(projection, false, new Float32Array(getProjection));
 	
+
+
+
+	var delta = 0;
+	
 	var rotX = 0, rotY = 0, rotZ = 0;
 	function animate() {
 		if (resized) {
@@ -547,12 +508,28 @@ function main()
 			rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
 			resized = false;
 		}
-		// rotX += 0.25;
-		// rotY += 0.75;
-		// rotZ += 0.5;
-		// if (rotX > 360) rotX -= 360;
-		// if (rotY > 360) rotY -= 360;
-		// if (rotZ > 360) rotZ -= 360;
+		document.addEventListener('keydown', onKeydown, false);
+		function onDocumentKeyDown(event){
+			event = event || window.event;
+			var keycode = event.keyCode;
+			switch(keycode){
+				// Case MOVE
+				case 38 : //maju
+					camera.position.z = camera.position.z - delta;
+					break;
+				case 40 : // mundur
+					camera.position.z = camera.position.z + delta;
+					break;
+				case 37 : //arrowLeft
+					camera.rotation.y = camera.rotation.y + (Math.PI * yawMove);
+					break;
+				case 39 : //arrowRight
+					camera.rotation.y = camera.rotation.y - (Math.PI * yawMove);
+					break;
+			document.addEventListener('keyup',onDocumentKeyUp,false);
+		function onDocumentKeyUp(event){
+			document.removeEventListener('keydown',onDocumentKeyDown,false);
+		}
 
 		var mov_matrixL = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
 		mov_matrixL = rotateZ(mov_matrixL, rotZ);
@@ -581,30 +558,4 @@ function main()
 		requestAnimationFrame(animate);
 	}
 	animate();
-}
-function normalize(a) {
-	var l = Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
-	var res = [];
-	for (var i = 0; i < 3; i++) res.push(a[i] / l);
-	return res;
-}
-
-function subtract(a, b) {
-	var res = [];
-	for (var i = 0; i < 3; i++) res.push(a[i] - b[i]);
-	return res;
-}
-
-function cross(a, b) {
-	var res = [];
-	res.push(a[1] * b[2] - a[2] * b[1]);
-	res.push(a[2] * b[0] - a[0] * b[2]);
-	res.push(a[0] * b[1] - a[1] * b[0]);
-	return res;
-}
-
-function surfaceNormal(a, b, c) {
-	var vab = subtract(b, a);
-	var vac = subtract(c, a);
-	return normalize(cross(vab, vac));
 }
