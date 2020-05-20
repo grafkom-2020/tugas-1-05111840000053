@@ -257,10 +257,6 @@ function main()
 	[0.5,-0.4,0.5], // 126
 	[0.5,-0.5,-0.5] // 127
 
-
-
-
-
 	];
 
 
@@ -307,7 +303,6 @@ function main()
 		}
 	}
 
-
 	isi(124,125,126,127);
 	
 	  function isikanan(a,b,c,d)
@@ -337,7 +332,6 @@ function main()
 				}
         }
 	  }
-
 
 	isikanan(0,1,2,3); //depan bawah
 	isikanan(0,5,4,3);  //depan atas
@@ -406,16 +400,20 @@ function main()
 	'attribute vec3 aColor;'+
 	'uniform mat4 aMatrix;'+
 	'varying vec3 vColor;'+
+	'varying vec3 vLighting;'+
 	'void main(void) {'+
 		'vColor = aColor;'+
+		'vec3 ambientLight = vec3(0.2,0.2,0.2);'+
 		'gl_Position =  aMatrix * vec4(aPosition, 1.0);'+
+		'vLighting = ambientLight;'+
 	'}';
 	
 	var leftFragmentShaderCode = 
 	'precision mediump float;'+
 	'varying vec3 vColor;'+
+	'varying vec3 vLighting;'+
 	'void main() {'+
-		'gl_FragColor = vec4(vColor, 1.0);'+
+	'gl_FragColor = vec4(vColor*vLighting, 1.0);'+
 	'}';
 
 	var vertexShader = leftGL.createShader(leftGL.VERTEX_SHADER);
@@ -447,19 +445,23 @@ function main()
 	var rightVertexShaderCode = 
 	'attribute vec3 aPosition;'+
 	'attribute vec3 aColor;'+
+	'varying vec3 vLighting;'+
 	'uniform mat4 bMatrix;'+
 	'uniform mat4 aMatrix;'+
 	'varying vec3 vColor;'+
 	'void main(void) {'+
 		'vColor = aColor;'+
+		'vec3 ambientLight = vec3(0.2,0.2,0.2);'+
 		'gl_Position = bMatrix * aMatrix * vec4(aPosition, 1.0);'+
+		'vLighting = ambientLight;'+
 	'}';
 	
 	var rightFragmentShaderCode = 
 	'precision mediump float;' +
 	'varying vec3 vColor;'+
+	'varying vec3 vLighting;'+
 	'void main() {'+
-		'gl_FragColor = vec4(vColor, 1.0);'+
+		'gl_FragColor = vec4(vColor*vLighting, 1.0);'+
 	'}'
 	;
 	var vertexShader = rightGL.createShader(rightGL.VERTEX_SHADER);
