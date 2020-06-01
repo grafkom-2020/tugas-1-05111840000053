@@ -252,10 +252,13 @@ function main()
 	[0.39258, -0.02796, -0.001],   //122
 	[0.39138, 0.02629, -0.001],   //123
 
-	[-0.5,-0.5,-0.5], // 124
-	[-0.5,-0.4,0.5], // 125
-	[0.5,-0.4,0.5], // 126
-	[0.5,-0.5,-0.5] // 127
+	// Rentang geometri alas adalah 10x10 unit
+	// Sisi belakang alas tidak perlu dibuat lebih tinggi dari yang sisi depan,
+	//	dan tidak mengapa bila pada frame sebelah kiri tidak terlihat
+	[-5.0,-0.5,-0.5], // 124
+	[-5.0,-0.5,5.0], // 125
+	[5.0,-0.5,5.0], // 126
+	[5.0,-0.5,-5.0] // 127
 
 
 
@@ -286,8 +289,8 @@ function main()
 		[1,1,1],  [1,1,1],  [1,1,1],  [1,1,1],  [1,1,1],  [1,1,1],  [1,1,1],  [1,1,1],  [1,1,1], 
 		[1,1,1],  [1,1,1],  [1,1,1],  [1,1,1],  [1,1,1], [1,1,1], 
 		//nrp 053 
-		[0.53,0.53,0.53], [0.53,0.53,0.53], [0.53,0.53,0.53], [0.53,0.53,0.53]
-	
+		// Warna yang seharusnya #053053 atau rgb(5/255, 48/255, 83/255)
+		[5/255, 48/255, 83/255], [5/255, 48/255, 83/255], [5/255, 48/255, 83/255], [5/255, 48/255, 83/255]
 	];
 	
 	
@@ -522,13 +525,13 @@ function main()
 		rightGL.uniformMatrix4fv(matrixR, false, new Float32Array(mov_matrixR));
 		
 		leftGL.clear(leftGL.COLOR_BUFFER_BIT | leftGL.DEPTH_BUFFER_BIT);
-		leftGL.drawArrays(leftGL.TRIANGLES, 0, leftVertices.length);
+		leftGL.drawArrays(leftGL.TRIANGLES, 0, leftVertices.length / 6);
 		leftGL.enable(leftGL.DEPTH_TEST);
 		leftGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, leftGL.canvas.width, leftGL.canvas.width);
 		leftGL.clearColor(0.5, 0.5, 0.5, 0.9);
 
 		rightGL.clear(rightGL.COLOR_BUFFER_BIT | rightGL.DEPTH_BUFFER_BIT);
-		rightGL.drawArrays(rightGL.TRIANGLES, 0, rightVertices.length);
+		rightGL.drawArrays(rightGL.TRIANGLES, 0, rightVertices.length / 6);
 		rightGL.enable(rightGL.DEPTH_TEST);
 		rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
 		rightGL.clearColor(0.5, 0.5, 0.5, 0.9);
