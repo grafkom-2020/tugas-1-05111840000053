@@ -545,13 +545,13 @@ function main()
 		rightGL.uniformMatrix4fv(matrixR, false, new Float32Array(mov_matrixR));
 		
 		leftGL.clear(leftGL.COLOR_BUFFER_BIT | leftGL.DEPTH_BUFFER_BIT);
-		leftGL.drawArrays(leftGL.TRIANGLES, 0, leftVertices.length);
+		leftGL.drawArrays(leftGL.TRIANGLES, 0, leftVertices.length / 6);
 		leftGL.enable(leftGL.DEPTH_TEST);
 		leftGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, leftGL.canvas.width, leftGL.canvas.width);
 		leftGL.clearColor(0.5, 0.5, 0.5, 0.9);
 
 		rightGL.clear(rightGL.COLOR_BUFFER_BIT | rightGL.DEPTH_BUFFER_BIT);
-		rightGL.drawArrays(rightGL.TRIANGLES, 0, rightVertices.length);
+		rightGL.drawArrays(rightGL.TRIANGLES, 0, rightVertices.length / 6);
 		rightGL.enable(rightGL.DEPTH_TEST);
 		rightGL.viewport(0, (leftGL.canvas.height - leftGL.canvas.width)/2, rightGL.canvas.width, rightGL.canvas.width);
 		rightGL.clearColor(0.5, 0.5, 0.5, 0.9);
